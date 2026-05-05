@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from './Security/AuthContext.js'
 
 export default function LoginComponent(){
 
@@ -12,6 +13,7 @@ export default function LoginComponent(){
     const [showErrorMessage , setErrorMessage] = useState(false)
 
     const navigate = useNavigate()
+    const authContext = useAuth()
     
     function handelPassword(event){
         setPassword(event.target.value)
@@ -22,7 +24,7 @@ export default function LoginComponent(){
     }
 
     function handelSubmit(){
-        if(username === 'jay' && password === 'dummy'){
+        if(authContext.login(username, password)){
             setSuccessMessage(true)
             setErrorMessage(false)
             navigate(`/home/${username}`)
