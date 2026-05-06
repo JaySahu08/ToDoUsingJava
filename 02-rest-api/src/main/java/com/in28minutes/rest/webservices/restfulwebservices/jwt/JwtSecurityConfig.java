@@ -29,8 +29,8 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-// import org.springframework.boot.autoconfigure.security.servlet.PathRequest; // Before Spring Boot 4
-import org.springframework.boot.security.autoconfigure.web.servlet.PathRequest; // From Spring Boot 4
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
+// import org.springframework.boot.security.autoconfigure.web.servlet.PathRequest; // From Spring Boot 4
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.nimbusds.jose.JOSEException;
@@ -72,12 +72,8 @@ public class JwtSecurityConfig {
 
     @Bean
     public AuthenticationManager authenticationManager(UserDetailsService userDetailsService) {
-        // Before Spring Boot 4
-        // var authenticationProvider = new DaoAuthenticationProvider();
-        // authenticationProvider.setUserDetailsService(userDetailsService);
-
-        // After Spring Boot 4
-        var authenticationProvider = new DaoAuthenticationProvider(userDetailsService);
+        var authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(userDetailsService);
 
         return new ProviderManager(authenticationProvider);
     }
